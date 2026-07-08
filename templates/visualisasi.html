@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form method="POST" action="/visualisasi">
+  <button type="submit" class="btn-train">Training Data</button>
+</form>
+
+<div class="model-container">
+  <div class="model">
+    <h3>MAPE</h3>
+    <p class="ket-card">Rata-rata kesalahan prediksi dalam persen</p>
+    <p class="value">{{ mape if mape is not none else "None" }}%</p>
+  </div>
+  <div class="model">
+    <h3>MAE</h3>
+    <p class="ket-card">Rata-rata selisih absolut antara nilai aktual dan prediksi</p>
+    <p class="value">{{ mae if mae is not none else "None" }}</p>
+  </div>
+  <div class="model">
+    <h3>RMSE</h3>
+    <p class="ket-card">Rata-rata kesalahan prediksi terhadap kesalahan besar</p>
+    <p class="value">{{ rmse if rmse is not none else "None" }}</p>
+  </div>
+  <div class="model">
+    <h3>R2 Squared</h3>
+    <p class="ket-card">Seberapa baik model menjelaskan variasi data</p>
+    <p class="value">{{ r2 if r2 is not none else "None" }}</p>
+  </div>
+</div>
+
+{% if labels and labels|length > 0 %}
+<canvas id="chart" height="100"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var chartLabels   = {{ labels   | tojson | safe if labels   else "[]" }};
+  var chartAktual   = {{ aktual   | tojson | safe if aktual   else "[]" }};
+  var chartPrediksi = {{ prediksi | tojson | safe if prediksi else "[]" }};
+
+  if (!chartLabels.length) return;
+
+  var ctx = document.getElementById('chart').getContext('2d');
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: chartLabels,
+      datasets: [
+        {
+            label: 'Data Aktual',
+            data: chartAktual,
+            borderColor: '#5d7d48',
+            backgroundColor: '#5d7d48',
+            tension: 0.2,
+            fill: false,
+            datalabels: {
+            color: '#000000',
+            align: 'bottom',
+            anchor: 'end',
+            formatter: Math.round
+          }
+        },
+        {
+            label: 'Data Prediksi',
+            data: chartPrediksi,
+            borderColor: '#e91e63',
+            backgroundColor: '#e91e63',
+            tension: 0.2,
+            fill: false,
+            datalabels: {
+            color: '#000000',
+            align: 'bottom',
+            anchor: 'end',
+            formatter: function(value) {
+              return value.toFixed(1);
+            }
+          }
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: true
+        },
+        datalabels: {
+          font: {
+            size: 10,
+            weight: 'bold'
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: false
+        }
+      }
+    },
+    plugins: [ChartDataLabels]
+  });
+});
+</script>
+
+{% endif %}
+
+{% endblock %}

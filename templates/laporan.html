@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Laporan Prediksi</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="laporan">
+
+  <div class="kop">
+    <div class="logo">
+      <!-- isi logo di sini, bisa pakai <img> -->
+      <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo-img">
+    </div>
+
+    <div class="surat">
+      <h3>PEMERINTAH KOTA PADANG</h3>
+      <h2>DINAS KESEHATAN KOTA PADANG</h2>
+      <p>Jalan Bagindo Aziz Chan Km.15 By Pass, Aia Pacah, Kota Padang 256176, Telepon (0751) 462619</p>
+      <p>
+        Laman : 
+        <a href="https://www.dinkes.padang.go.id" target="_blank">
+          www.dinkes.padang.go.id
+        </a>
+      </p>
+
+    </div>
+  </div>
+
+  <hr class="garis">
+
+  <h3 class="judul-laporan">LAPORAN PREDIKSI JUMLAH KASUS DBD</h3>
+  <div class="periode">
+  <p style="padding-top: 20px;">Nomor Dokumen : {{nomor_dokumen}}</p>
+  {% if hasil_prediksi %}
+  <p class="periode" style="padding-top: 5px;">
+  Periode Prediksi : {{ hasil_prediksi[0].bulan }} {{ hasil_prediksi[0].tahun }} - {{ hasil_prediksi[-1].bulan }} {{ hasil_prediksi[-1].tahun }}
+  </p>
+  </div>
+{% endif %}
+
+
+<p class="rinci">Prediksi jumlah kasus Demam Berdarah Dengue dilakukan menggunakan metode <i>Random Forest</i> 
+    berdasarkan data historis kasus DBD yang tersedia.</p>
+
+  <table class="tabel-laporan">
+      <tr class="header">
+        <th style="width: 60px;">No</th>
+        <th>Tahun</th>
+        <th>Bulan</th>
+        <th>Jumlah Kasus</th>
+        <th>Keterangan</th>
+      </tr>
+      {% for h in hasil_prediksi %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ h.tahun }}</td>
+        <td>{{ h.bulan }}</td>
+        <td>{{ h.ket }} Kasus</td>
+        <td>
+            {% if h.ket < 20 %}
+            Rendah
+            {% elif h.ket <= 50 %}
+            Sedang
+            {% else %}
+            Tinggi
+            {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+  </table>
+<p class="catatan" style="font-weight: bold;">Catatan:</p>
+<p class="catatan" style="margin-left: 50px; margin-top: 10px;">
+    Rendah jika ≤ 20 kasus <br>
+    Sedang jika 21–50 kasus<br>
+    Tinggi jika > 50 kasus<br>
+</p><br>
+<div class="ttd">
+<p>Padang, {{tanggal_laporan}} </p>
+<p style="margin-bottom: 60px;">Kepala Bidang Pencegahan dan
+Pengendalian Penyakit,</p>
+<p style="font-weight: bold;">dr. Citra Septiyenri Syahnur </p>
+<p>NIP: 19810918 200802 2 001</p>
+</div>
+</body>
+</html>
