@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="upload">
+  <form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    {{ form.file() }}
+    {{ form.submit() }}
+  </form>
+
+</div>
+
+  <!-- Keterangan format -->
+  <p class="ket">
+    <b>Format file:</b> .csv<br>
+    Pastikan kolom: <i>Tahun</i>, <i>Bulan</i>, <i>ABJ(%), </i> dan <i>Jumlah Kasus</i>.
+  </p>
+
+  <!-- Error -->
+  {% if error %}
+    <div class="error">{{ error }}</div>
+  {% endif %}
+    {% if success %}
+    <div class="success">{{ success }}</div>
+  {% endif %}
+
+<div class="card-container">
+  <div class="card">
+    <h3>Jumlah Data</h3>
+    <p class="value">
+      {{ jumlah_data }}
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Rata-Rata Kasus</h3>
+    <p class="value">
+      {{ rata_rata }}
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Periode Tahun</h3>
+    <p class="value">
+      {{ periode_tahun }}
+    </p>
+  </div>
+</div>
+
+{% if show_table %}
+<div class="table-wrapper">
+  <table class="data-table">
+    <thead>
+      <tr>
+        {% for col in columns %}
+          <th>{{ col }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in data %}
+        <tr>
+          {% for cell in row %}
+            <td>{{ cell }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+{% endblock %}
