@@ -37,14 +37,14 @@ Peramalan jumlah kasus DBD bulanan menggunakan algoritma Random Forest di Python
 <img width="1280" height="586" alt="image" src="https://github.com/user-attachments/assets/003a16cd-6f26-4fb5-af13-16687a7d0270" />
 
 # Dataset
-- **Sumber** : Dinas Kesehatan Kota Padang
-- **Periode** : 8 tahun (2017 - 2024)
-- **Fitur yang digunakan** : Tahun, Bulan, Angka Bebas Jentik (ABJ), Jumlah Kasus
+- **Sumber                 :** Dinas Kesehatan Kota Padang
+- **Periode                :** 8 tahun (2017 - 2024)
+- **Fitur yang digunakan   :** Tahun, Bulan, Angka Bebas Jentik (ABJ), Jumlah Kasus
 
 # Teknologi yang digunakan
-- **Framework:** Flask
-- **Algoritma:** Random Forest Regression
-- **Bahasa Pemrograman:** Python
+- **Framework              :** Flask
+- **Algoritma              :** Random Forest Regression
+- **Bahasa Pemrograman     :** Python
 
 # Metodologi yang Digunakan
 Proyek ini menerapkan metodologi berbasis *Machine Learning Pipeline* untuk data deret waktu (*time-series*). Tahapan metodologi yang dilakukan meliputi:
@@ -64,10 +64,10 @@ Proyek ini menerapkan metodologi berbasis *Machine Learning Pipeline* untuk data
 6. **Evaluasi Model:** Mengukur akurasi prediksi menggunakan metrik evaluasi standar regresi, yaitu RMSE, MAE, MAPE, dan $R^2$ Squared.
 
 # Hasil dan Evaluasi Model
-- RMSE : 6.53
-- MAE : 4.71
-- MAPE : 10.46%
-- R2 Squared : 0.12
+- **RMSE       :** 6.53
+- **MAE        :** 4.71
+- **MAPE       :** 10.46%
+- **R2 Squared :** 0.12
 
 # 📁 Struktur Direktori Proyek
 
@@ -80,7 +80,7 @@ dengue-prediction-rf/
 │   │   ├── logo.png
 │   │   └── nyamuk.jpg        
 │   └── style.css            # Mengatur tampilan halaman
-├── model/                  # Tempat menyimpan file model RF yang sudah dilatih
+├── model/                   # Tempat menyimpan file model RF yang sudah dilatih
 │   └── rf_model.joblib
 ├── data/                    # Tempat untuk menyimpan data
 │   ├── data_cleaned.csv     # Tempat untuk menyimpan data yang sudah diproses 
@@ -93,6 +93,6 @@ dengue-prediction-rf/
 ```
 
 # Author
-- **Author** : RAHMI MARDIAH SAPUTRI
-- **Email** : rahmimardiahsaputri@gmail.com
-- **Linkedin** : https://www.linkedin.com/in/rahmi-mardiah-saputri-7b6998420
+- **Author   :** RAHMI MARDIAH SAPUTRI
+- **Email    :** rahmimardiahsaputri@gmail.com
+- **Linkedin :** https://www.linkedin.com/in/rahmi-mardiah-saputri-7b6998420
