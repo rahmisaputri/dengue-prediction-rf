@@ -13,27 +13,33 @@ Peramalan jumlah kasus DBD bulanan menggunakan algoritma Random Forest di Python
 
 # Tampilan Website
 1. **Halaman Login**
+
 <img width="1280" height="586" alt="image" src="https://github.com/user-attachments/assets/7bf87936-c89b-4fe2-b70f-c45f5c86a02d" />
 
-2. **Halaman Dashborad (Upload Data dan Tampilan Dataset)**
+3. **Halaman Dashborad (Upload Data dan Tampilan Dataset)**
+
 <img width="1280" height="585" alt="image" src="https://github.com/user-attachments/assets/ab44cb47-3f60-485f-9779-16c5ed233242" />
 
-3. **Halaman Training dan Visualisasi Model**
+4. **Halaman Training dan Visualisasi Model**
 - Melakukan training data
 - Menampilkan evaluasi matriks (MAPE, MAE, RMSE, R2 Squared)
 - Menampilkan visualisasi perbandingan data real dan data prediksi
+  
 <img width="1280" height="583" alt="image" src="https://github.com/user-attachments/assets/09445899-2c91-463e-b69b-7fb266fa6c50" />
 
 4. **Halaman Prediksi**
 - Mengisi periode kasus yang ingin diprediksi (1 - 12 bulan)
 - Mengisi tahun dan bulan yang ingin di prediksi
 - Mengisi lag feature (jumlah kasus 6 bulan terakhir)
+  
 <img width="1280" height="433" alt="image" src="https://github.com/user-attachments/assets/b0350680-cf12-45aa-ab77-8b9f10502bb1" />
 
 - Contoh Hasil Prediksi
+  
 <img width="1280" height="586" alt="image" src="https://github.com/user-attachments/assets/0eec87ba-d5e2-4ef9-9263-3d9ebb9710e4" />
 
 5. **Halaman Cetak Laporan**
+
 <img width="1280" height="586" alt="image" src="https://github.com/user-attachments/assets/003a16cd-6f26-4fb5-af13-16687a7d0270" />
 
 # Dataset
@@ -42,9 +48,13 @@ Peramalan jumlah kasus DBD bulanan menggunakan algoritma Random Forest di Python
 - **Fitur yang digunakan   :** Tahun, Bulan, Angka Bebas Jentik (ABJ), Jumlah Kasus
 
 # Teknologi yang digunakan
-- **Framework              :** Flask
-- **Algoritma              :** Random Forest Regression
-- **Bahasa Pemrograman     :** Python
+- **Framework :** Flask
+
+- **Algoritma :** Random Forest Regression
+
+- **Backend :** Python
+  
+- **Frontend :** HTML, CSS
 
 # Metodologi yang Digunakan
 Proyek ini menerapkan metodologi berbasis *Machine Learning Pipeline* untuk data deret waktu (*time-series*). Tahapan metodologi yang dilakukan meliputi:
@@ -84,7 +94,14 @@ dengue-prediction-rf/
 │   └── rf_model.joblib
 ├── data/                    # Tempat untuk menyimpan data
 │   ├── data_cleaned.csv     # Tempat untuk menyimpan data yang sudah diproses 
-│   ├── hasil_prediksi.csv   # Tempat untuk menyimpan data hasil prediksi
+│   └── hasil_prediksi.csv   # Tempat untuk menyimpan data hasil prediksi
+├── templates/               # Tempat untuk menyimpan script tampilan web
+│   ├── base.html     
+│   ├── dashboard.html       # Script tampilan dashboard
+│   ├── laporan.html         # Script tampilan laporan
+│   ├── login.html           # Script tampilan login
+│   ├── prediksi.html        # Script tampilan prediksi 
+│   └── visualisasi.html     # Script tampilan visualisasi
 ├── app.py                   # File utama untuk menjalankan website/dashboard
 ├── train.py                 # Script untuk training data
 ├── train_model.ipynb        # Script untuk training data dengan format .ipynb
