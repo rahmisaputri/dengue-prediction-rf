@@ -14,6 +14,7 @@ Peramalan jumlah kasus DBD bulanan menggunakan algoritma Random Forest di Python
 # Tampilan Website
 1. **Halaman Login**
 <img width="1280" height="586" alt="image" src="https://github.com/user-attachments/assets/7bf87936-c89b-4fe2-b70f-c45f5c86a02d" />
+
 2. **Halaman Dashborad (Upload Data dan Tampilan Dataset)**
 <img width="1280" height="585" alt="image" src="https://github.com/user-attachments/assets/ab44cb47-3f60-485f-9779-16c5ed233242" />
 
