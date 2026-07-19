@@ -41,6 +41,11 @@ Peramalan jumlah kasus DBD bulanan menggunakan algoritma Random Forest di Python
 - **Periode** : 8 tahun (2017 - 2024)
 - **Fitur yang digunakan** : Tahun, Bulan, Angka Bebas Jentik (ABJ), Jumlah Kasus
 
+# Teknologi yang digunakan
+- **Framework:** Flask
+- **Algoritma:** Random Forest Regression
+- **Bahasa Pemrograman:** Python
+
 # Metodologi yang Digunakan
 Proyek ini menerapkan metodologi berbasis *Machine Learning Pipeline* untuk data deret waktu (*time-series*). Tahapan metodologi yang dilakukan meliputi:
 
