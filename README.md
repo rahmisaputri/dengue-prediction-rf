@@ -64,6 +64,29 @@ Proyek ini menerapkan metodologi berbasis *Machine Learning Pipeline* untuk data
 - MAPE : 10.46%
 - R2 Squared : 0.12
 
+# 📁 Struktur Direktori Proyek
+
+```text
+dengue-prediction-rf/
+├── static/                  
+│   ├── files                # Menyimpan dataset yang digunakan
+│   │   └── 260114_dbd_padangkotor.csv
+│   ├── Images               # Menyimpan gambar
+│   │   ├── logo.png
+│   │   └── nyamuk.jpg        
+│   └── style.css            # Mengatur tampilan halaman
+├── model/                  # Tempat menyimpan file model RF yang sudah dilatih
+│   └── rf_model.joblib
+├── data/                    # Tempat untuk menyimpan data
+│   ├── data_cleaned.csv     # Tempat untuk menyimpan data yang sudah diproses 
+│   ├── hasil_prediksi.csv   # Tempat untuk menyimpan data hasil prediksi
+├── app.py                   # File utama untuk menjalankan website/dashboard
+├── train.py                 # Script untuk training data
+├── train_model.ipynb        # Script untuk training data dengan format .ipynb
+├── requirements.txt         # Daftar library Python (pandas, scikit-learn, dll)
+└── README.md                # Dokumentasi proyek
+```
+
 # Author
 - **Author** : RAHMI MARDIAH SAPUTRI
 - **Email** : rahmimardiahsaputri@gmail.com
