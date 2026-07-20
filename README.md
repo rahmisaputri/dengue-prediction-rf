@@ -17,19 +17,25 @@ Peramalan jumlah kasus DBD bulanan menggunakan algoritma Random Forest di Python
 <img width="1280" height="586" alt="image" src="https://github.com/user-attachments/assets/7bf87936-c89b-4fe2-b70f-c45f5c86a02d" />
 
 3. **Halaman Dashborad (Upload Data dan Tampilan Dataset)**
+- Menampilkan jumlah data yanng tersedia
+- Kasus tertinggi
+- Kasus terendah
+- Rata-rata kasus per bulan
+- Periode data yanng di upload
+<img width="1280" height="584" alt="image" src="https://github.com/user-attachments/assets/e91d5943-788a-40b5-96f5-08e4fc00843b" />
 
-<img width="1280" height="635" alt="image" src="https://github.com/user-attachments/assets/83943d3a-b208-4fc2-8c08-9a3ddd744566" />
 
 4. **Halaman Training dan Visualisasi Model**
 - Melakukan training data
 - Menampilkan evaluasi matriks (MAPE, MAE, RMSE, R2 Squared)
-- Menampilkan visualisasi perbandingan data real dan data prediksi
   
- **Tampilan Sebelum Training Data**
-  <img width="1280" height="581" alt="image" src="https://github.com/user-attachments/assets/b4c8a195-a8a5-4e0f-ac23-a1079b588022" />
- 
- **Tampilan Setelah Training Data**
-<img width="1280" height="633" alt="image" src="https://github.com/user-attachments/assets/d8ffb7bf-cf1f-4d8b-95f2-87e5c06126ce" />
+<img width="1280" height="570" alt="image" src="https://github.com/user-attachments/assets/d02e663c-eb0d-44f7-9e48-834426935bee" />
+
+- Menampilkan visualisasi perbandingan antara data hasil prediksi dengan data aktual dari dataset
+<img width="1280" height="581" alt="image" src="https://github.com/user-attachments/assets/85c36aea-297e-4df7-a2f0-a8eb9f8daba4" />
+
+- Menampilkan selisih antara data prediksi dan data aktual
+ <img width="1280" height="573" alt="image" src="https://github.com/user-attachments/assets/4cd4da9c-8cd1-4bdf-a1ef-fca9a76b5a9a" />
 
 4. **Halaman Prediksi**
 - Mengisi periode kasus yang ingin diprediksi (1 - 12 bulan)
