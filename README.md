@@ -18,14 +18,16 @@ Peramalan jumlah kasus DBD bulanan menggunakan algoritma Random Forest di Python
 
 3. **Halaman Dashborad (Upload Data dan Tampilan Dataset)**
 
-<img width="1280" height="585" alt="image" src="https://github.com/user-attachments/assets/ab44cb47-3f60-485f-9779-16c5ed233242" />
+<img width="1280" height="635" alt="image" src="https://github.com/user-attachments/assets/83943d3a-b208-4fc2-8c08-9a3ddd744566" />
 
 4. **Halaman Training dan Visualisasi Model**
 - Melakukan training data
 - Menampilkan evaluasi matriks (MAPE, MAE, RMSE, R2 Squared)
 - Menampilkan visualisasi perbandingan data real dan data prediksi
-  
-<img width="1280" height="583" alt="image" src="https://github.com/user-attachments/assets/09445899-2c91-463e-b69b-7fb266fa6c50" />
+**Tampilan Sebelum Training Data**
+  <img width="1280" height="581" alt="image" src="https://github.com/user-attachments/assets/b4c8a195-a8a5-4e0f-ac23-a1079b588022" />
+**Tampilan Setelah Training Data**
+<img width="1280" height="633" alt="image" src="https://github.com/user-attachments/assets/d8ffb7bf-cf1f-4d8b-95f2-87e5c06126ce" />
 
 4. **Halaman Prediksi**
 - Mengisi periode kasus yang ingin diprediksi (1 - 12 bulan)
