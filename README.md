@@ -24,9 +24,11 @@ Peramalan jumlah kasus DBD bulanan menggunakan algoritma Random Forest di Python
 - Melakukan training data
 - Menampilkan evaluasi matriks (MAPE, MAE, RMSE, R2 Squared)
 - Menampilkan visualisasi perbandingan data real dan data prediksi
-**Tampilan Sebelum Training Data**
+  
+ **Tampilan Sebelum Training Data**
   <img width="1280" height="581" alt="image" src="https://github.com/user-attachments/assets/b4c8a195-a8a5-4e0f-ac23-a1079b588022" />
-**Tampilan Setelah Training Data**
+ 
+ **Tampilan Setelah Training Data**
 <img width="1280" height="633" alt="image" src="https://github.com/user-attachments/assets/d8ffb7bf-cf1f-4d8b-95f2-87e5c06126ce" />
 
 4. **Halaman Prediksi**
