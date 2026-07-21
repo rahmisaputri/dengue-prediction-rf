@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form method="POST" action="/prediksi">
+
+  <div class="pilih-bulan">
+    <p class="pilihan">Pilih Periode Prediksi</p>
+    <select name="xbulan" class="input-bulan" required>
+      <option value="">-- Jumlah Bulan Yang Ingin Diprediksi --</option>
+      {% for i in [1,2,3,4,5,6,7,8,9,10,11,12] %}
+      <option value="{{ i }}" {% if form_data and form_data.xbulan == i|string %}selected{% endif %}>
+        {{ i }} Bulan
+      </option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="prediksi-container">
+    <div class="prediksi">
+      Tahun
+      <input type="number" name="tahun" required value="{{ form_data.tahun if form_data }}">
+    </div>
+
+    <div class="prediksi">
+      Bulan (1-12)
+      <input type="number" name="bulan" min="1" max="12" required value="{{ form_data.bulan if form_data }}">
+    </div>
+
+    <div class="prediksi">
+      Angka Bebas jentik
+      <input type="number" step="0.01" name="abj" required value="{{ form_data.abj if form_data }}">
+    </div>
+
+    <div class="prediksi">Lag 1 <input type="number" step="1" name="lag1" required value="{{ form_data.lag1 if form_data }}"></div>
+    <div class="prediksi">Lag 2 <input type="number" step="1" name="lag2" required value="{{ form_data.lag2 if form_data }}"></div>
+    <div class="prediksi">Lag 3 <input type="number" step="1" name="lag3" required value="{{ form_data.lag3 if form_data }}"></div>
+    <div class="prediksi">Lag 4 <input type="number" step="1" name="lag4" required value="{{ form_data.lag4 if form_data }}"></div>
+    <div class="prediksi">Lag 5 <input type="number" step="1" name="lag5" required value="{{ form_data.lag5 if form_data }}"></div>
+    <div class="prediksi">Lag 6 <input type="number" step="1" name="lag6" required value="{{ form_data.lag6 if form_data }}"></div>
+
+  </div>
+<div class="keterangan">
+  Keterangan: <br>
+  <div class="ket-lag">
+  <div class="lag-kiri">
+  Lag 1 : Jumlah kasus 1 bulan sebelumnya <br>
+  Lag 2 : Jumlah kasus 2 bulan sebelumnya <br>
+  </div>
+  <div class="lag-tengah">
+  Lag 3 : Jumlah kasus 3 bulan sebelumnya <br>
+  Lag 4 : Jumlah kasus 4 bulan sebelumnya <br>
+  </div>
+  <div class="lag-kanan">
+  Lag 5 : Jumlah kasus 5 bulan sebelumnya <br>
+  Lag 6 : Jumlah kasus 6 bulan sebelumnya <br>
+  </div>
+</div>
+</div>
+  <button type="submit" class="btn-prediksi">Prediksi Data</button>
+</form>
+
+
+{% if hasil_prediksi %}
+<hr>
+<div class="hasil">
+<h4>Hasil Prediksi Jumlah Kasus</h4>
+<!-- Button cetak -->
+<iframe id="framePrint" style="display:none;"></iframe>
+<button id="btnPrint" class="btn-cetak">Cetak Laporan</button>
+
+<script>
+document.getElementById("btnPrint").addEventListener("click", () => {
+  const frame = document.getElementById("framePrint");
+
+  // load halaman laporan ke iframe
+  frame.src = "/cetak_laporan";
+
+  // setelah iframe selesai load, langsung print
+  frame.onload = function() {
+    frame.contentWindow.focus();
+    frame.contentWindow.print();
+  };
+});
+</script>
+
+<div class="hasil-wrapper">
+
+  <!-- CHART (KIRI) -->
+  <div class="hasil-chart">
+    <canvas id="chart" height="120"></canvas>
+  </div>
+
+  <!-- TABEL (KANAN) -->
+  <div class="hasil-tabel">
+    <table class="tabel">
+      <tr>
+        <th>Tahun</th>
+        <th>Bulan</th>
+        <th>Prediksi</th>
+        <th>Jumlah Kasus prediksi</th>
+      </tr>
+      {% for h in hasil_prediksi %}
+      <tr>
+        <td>{{ h.tahun }}</td>
+        <td>{{ h.bulan }}</td>
+        <td>{{ h.prediksi }}</td>
+        <td>{{ h.ket }} Kasus</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+</div>
+
+<!-- CHART JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const labels = {{ labels | tojson | safe }};
+  const dataPrediksi = {{ prediksi_chart | tojson | safe }};
+
+  const ctx = document.getElementById("chart").getContext("2d");
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Prediksi Kasus DBD',
+        data: dataPrediksi,
+        borderColor: '#e91e63',
+        backgroundColor: 'rgba(233, 30, 99, 0.2)',
+        align: 'top',
+        tension: 0.3,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+</div>
+<script>
+  window.onload = function() {
+    const hasil = document.getElementById("hasil");
+    if (hasil) {
+      hasil.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+</script>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="content">
+  <header>
+    <h1 class="judul">
+      Prediksi Jumlah Kasus DBD dengan Random Forest
+
+    {% if session.get('login') %}
+    <div class="logout">
+      <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+    {% endif %}
+    </h1>
+  </header>
+</div>
+
+{% if session.get('login') %}
+<nav class="nav">
+  <a href="{{ url_for('dashboard') }}" class="{% if request.path == '/dashboard' %}active{% endif %}">Dashboard</a>
+  <a href="{{ url_for('visualisasi') }}" class="{% if request.path == '/visualisasi' %}active{% endif %}">Training dan Visualisasi Model</a>
+  <a href="{{ url_for('prediksi') }}" class="{% if request.path == '/prediksi' %}active{% endif %}">Prediksi Kasus</a>
+</nav>
+{% endif %}
+
+<div class="container">
+  {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>

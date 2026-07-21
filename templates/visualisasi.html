@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form method="POST" action="/visualisasi" id="train-form">
+  <button type="submit" class="btn-train" id="train-btn">Latih Ulang Model dengan Data Terbaru</button>
+</form>
+
+<div class="model-container">
+  <div class="model">
+    <h3>MAPE</h3>
+    <p class="value">{{ mape if mape is not none else "None" }}%</p>
+    <p class="ket-card">Rata-rata kesalahan prediksi dalam persen</p>
+  </div>
+  <div class="model">
+    <h3>MAE</h3>
+    <p class="value">{{ mae if mae is not none else "None" }}</p>
+    <p class="ket-card">Rata-rata selisih absolut antara nilai aktual dan prediksi</p>
+  </div>
+  <div class="model">
+    <h3>RMSE</h3>
+    <p class="value">{{ rmse if rmse is not none else "None" }}</p>
+    <p class="ket-card">Mengukur kesalahan prediksi dengan bobot lebih besar untuk selisih yang ekstrem</p>
+  </div>
+  <div class="model">
+    <h3>R2 Squared</h3>
+    <p class="value">{{ r2 if r2 is not none else "None" }}</p>
+    {% if r2 is not none and r2 < 0.5 %}
+    <p class="ket-card">R² rendah terjadi saat variasi data bulanan relatif kecil.</p>
+    {% endif %}
+  </div>
+</div>
+
+{% if labels and labels|length > 0 %}
+
+<h4 class="chart-title">Perbandingan Data Aktual vs Prediksi</h4>
+<canvas id="chart" height="100"></canvas>
+
+<h4 class="chart-title">Residual (Selisih Aktual − Prediksi per Bulan)</h4>
+<p class="ket-card" style="text-align: center;font-size: 15px;">
+
+🟩 Hijau → Prediksi lebih rendah daripada data aktual.
+🟥 Merah → Prediksi lebih tinggi daripada data aktual.<br></r></p>
+<canvas id="chartResidual" height="100"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var chartLabels   = {{ labels   | tojson | safe if labels   else "[]" }};
+  var chartAktual   = {{ aktual   | tojson | safe if aktual   else "[]" }};
+  var chartPrediksi = {{ prediksi | tojson | safe if prediksi else "[]" }};
+
+  if (!chartLabels.length) return;
+
+  // ===== 1. Line chart: Aktual vs Prediksi (chart lama, tidak diubah) =====
+  var ctx = document.getElementById('chart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: chartLabels,
+      datasets: [
+        {
+          label: 'Data Aktual',
+          data: chartAktual,
+          borderColor: '#7eb439',
+          backgroundColor: '#7eb439',
+          tension: 0.2,
+          fill: false,
+          datalabels: { color: '#000000', align: 'bottom', anchor: 'end', formatter: Math.round }
+        },
+        {
+          label: 'Data Prediksi',
+          data: chartPrediksi,
+          borderColor: '#cd1d25',
+          backgroundColor: '#cd1d25',
+          tension: 0.2,
+          fill: false,
+          datalabels: { color: '#000000', align: 'bottom', anchor: 'end', formatter: function (v) { return v.toFixed(1); } }
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: true }, datalabels: { font: { size: 10, weight: 'bold' } } },
+      scales: {
+        x: { title: { display: true, text: 'Periode (Tahun-Bulan)' } },
+        y: { title: { display: true, text: 'Jumlah Kasus' }, beginAtZero: false }
+      }
+    },
+    plugins: [ChartDataLabels]
+  });
+
+  // ===== 2. Bar chart: Residual per bulan (hijau = under-predict, merah = over-predict) =====
+  var residuals = chartAktual.map(function (v, i) { return +(v - chartPrediksi[i]).toFixed(2); });
+
+  var ctxResidual = document.getElementById('chartResidual').getContext('2d');
+  new Chart(ctxResidual, {
+    type: 'bar',
+    data: {
+      labels: chartLabels,
+      datasets: [{
+        label: 'Residual (Aktual - Prediksi)',
+        data: residuals,
+        backgroundColor: residuals.map(function (r) { return r >= 0 ? '#7eb439' : '#cd1d25'; })
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { title: { display: true, text: 'Periode (Tahun-Bulan)' } },
+        y: { title: { display: true, text: 'Selisih (jumlah kasus)' } }
+      }
+    }
+  });
+
+
+});
+</script>
+
+{% else %}
+<div class="empty-state">
+  <p>Belum ada hasil training untuk ditampilkan. Klik tombol <strong>"Latih Ulang Model dengan Data Terbaru"</strong> di atas untuk memulai proses training dan melihat hasilnya di sini.</p>
+</div>
+{% endif %}
+
+<script>
+document.getElementById('train-form').addEventListener('submit', function () {
+  var btn = document.getElementById('train-btn');
+  btn.disabled = true;
+  btn.textContent = 'Sedang melatih model... mohon tunggu';
+});
+</script>
+
+{% endblock %}

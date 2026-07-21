@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="upload">
+  <form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    {{ form.file() }}
+    {{ form.submit() }}
+  </form>
+
+</div>
+
+  <!-- Keterangan format -->
+  <p class="ket">
+    <b>Format file:</b> .csv<br>
+    Pastikan kolom: <i>Tahun</i>, <i>Bulan</i>, <i>ABJ(%), </i> dan <i>Jumlah Kasus</i>.
+  </p>
+
+  <!-- Error -->
+  {% if error %}
+    <div class="error">{{ error }}</div>
+  {% endif %}
+    {% if success %}
+    <div class="success">{{ success }}</div>
+  {% endif %}
+
+<div class="card-container">
+  <div class="card" style="background-color: #3c5e82;">
+    <h3>Data Tersedia</h3>
+    <p class="value">
+      {{ jumlah_data }} Data Bulanan
+    </p>
+  </div>
+
+  <div class="card" style="background-color: #dc2626;">
+    <h3>Kasus Tertinggi</h3>
+    <p class="value">
+      Pada {{ bulan_tertinggi }} <br>
+      {{ kasus_tertinggi }} Kasus
+    </p>
+  </div>
+
+    <div class="card" style="background-color: #7eb439;">
+    <h3>Kasus Terendah</h3>
+    <p class="value">
+      Pada {{ bulan_terendah }} <br>
+      {{ kasus_terendah }} Kasus
+    </p>
+  </div>
+
+  <div class="card" style="background-color: #3c5e82;">
+    <h3>Rata-Rata Bulanan</h3>
+    <p class="value">
+      {{ rata_rata }} Kasus
+    </p>
+  </div>
+
+  <div class="card" style="background-color: #3c5e82;">
+    <h3>Periode Data</h3>
+    <p class="value">
+      {{ periode_tahun }}
+    </p>
+  </div>
+</div>
+
+{% if show_table %}
+<div class="table-wrapper">
+  <table class="data-table">
+    <thead>
+      <tr>
+        {% for col in columns %}
+          <th>{{ col }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in data %}
+        <tr>
+          {% for cell in row %}
+            <td>{{ cell }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+{% endblock %}
