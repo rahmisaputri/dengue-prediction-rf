@@ -32,16 +32,21 @@
 </div>
 
 {% if labels and labels|length > 0 %}
+<div class="visual-container">
+  <div class="chart-visual">
+  <h4 class="chart-title">Perbandingan Data Aktual vs Prediksi</h4>
+      <canvas id="chart" height="300px" width="600px"></canvas>
+    </div>
 
-<h4 class="chart-title">Perbandingan Data Aktual vs Prediksi</h4>
-<canvas id="chart" height="100"></canvas>
+<div class="chart-visual">
+  <h4 class="chart-title">Residual (Selisih Aktual − Prediksi per Bulan)</h4>
+      <p class="ket-card" style="text-align: center;font-size: 15px;">
 
-<h4 class="chart-title">Residual (Selisih Aktual − Prediksi per Bulan)</h4>
-<p class="ket-card" style="text-align: center;font-size: 15px;">
-
-🟩 Hijau → Prediksi lebih rendah daripada data aktual.
-🟥 Merah → Prediksi lebih tinggi daripada data aktual.<br></r></p>
-<canvas id="chartResidual" height="100"></canvas>
+      🟩 Prediksi lebih rendah dari data aktual.
+      🟥 Prediksi lebih tinggi dari data aktual.<br></r></p>
+      <canvas id="chartResidual" height="300px" width="550px"></canvas>
+    </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>

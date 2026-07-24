@@ -26,7 +26,7 @@
   {% endif %}
 
 <div class="card-container">
-  <div class="card" style="background-color: #3c5e82;">
+  <div class="card" style="background-color: #F8F9FA;">
     <h3>Data Tersedia</h3>
     <p class="value">
       {{ jumlah_data }} Data Bulanan
@@ -49,20 +49,212 @@
     </p>
   </div>
 
-  <div class="card" style="background-color: #3c5e82;">
+  <div class="card" style="background-color: #F8F9FA;">
     <h3>Rata-Rata Bulanan</h3>
     <p class="value">
       {{ rata_rata }} Kasus
     </p>
   </div>
 
-  <div class="card" style="background-color: #3c5e82;">
+  <div class="card" style="background-color: #F8F9FA;">
     <h3>Periode Data</h3>
     <p class="value">
       {{ periode_tahun }}
     </p>
   </div>
 </div>
+
+<div class="dashboard-container">
+  
+  <!-- Chart 1: Missing Values -->
+  <div class="miss-chart-wrapper">
+    <canvas id="miss" height="400px" width="400px"></canvas>
+  </div>
+
+  <!-- Chart 2: Donut Chart Bulanan Terurut -->
+  <div class="chart-container">
+    
+    <!-- Kolom Kiri: Lingkaran Donut dengan Teks di Tengah -->
+    <div class="donut-wrapper">
+      <canvas id="bln"></canvas>
+      <div class="donut-center-text">
+        <span class="donut-total-number">{{ total_kasus_all if total_kasus_all else 0 }}</span>
+        <span class="donut-total-label">Total Kasus</span>
+      </div>
+    </div>
+
+    <!-- Kolom Kanan: Legend Tabel Custom Terurut -->
+    <div class="legend-column">
+      <h4 class="legend-title">Top Performing Months</h4>
+      
+      <div class="legend-scroll-area">
+        <table class="legend-table">
+          {% for i in range(bulan|length) %}
+            {% if jml_bulan[i] > 0 %}
+            <tr class="legend-row">
+              <td class="legend-cell-label">
+                <span class="donut-color-indicator"></span>
+                <span class="bulan-text">{{ bulan[i] }}</span>
+              </td>
+              <td class="legend-cell-value">
+                {{ jml_bulan[i] }} Kasus
+              </td>
+            </tr>
+            {% endif %}
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="trend-chart-wrapper" style="width: 100%; max-width: 1120px; background: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); margin: 20px auto 0 auto;">
+  <canvas id="trendKasus" height="120px"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Parsing data dari Flask ke JavaScript secara aman
+  var chartTitle    = {{ title | tojson | safe if title else "[]" }};
+  var chartMissing  = {{ missing | tojson | safe if missing else "[]" }};
+
+  var donutLabels    = {{ bulan | tojson | safe if bulan else "[]" }};
+  var donutData  = {{ jml_bulan | tojson | safe if jml_bulan else "[]" }};
+
+  var trendLabels   = {{ labels   | tojson | safe if labels   else "[]" }};
+  var trendData   = {{ trend   | tojson | safe if trend   else "[]" }};
+
+
+  //# ===== 1. Bar Chart: Missing Values =====
+  var ctx = document.getElementById('miss').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: chartTitle,
+      datasets: [
+        {
+          label: 'Missing Values',
+          data: chartMissing,
+          borderColor: '#455c36',
+          backgroundColor: '#7eb439',
+          tension: 0.2,
+          fill: false,
+          datalabels: { color: '#000', align: 'center', anchor: 'end', formatter: Math.round }
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      aspectRatio: 1.5,
+      plugins: { 
+        legend: { display: true }, 
+        datalabels: { font: { size: 11, weight: 'bold' } } 
+      },
+      scales: {
+        x: { title: { display: false, text: 'Fitur Dataset' } },
+        y: { title: { display: true, text: 'Jumlah Missing Value' }, beginAtZero: true } 
+      }
+    },
+    plugins: [ChartDataLabels]
+  });
+
+ //# ===== 2. Donut Chart: Bulan Tertinggi (2017-2024) =====
+// Gunakan palet warna medium soft yang Anda sukai sebelumnya
+  var warnaPalet = [
+    '#E09F9D', '#E6B89C', '#E0C79B', '#A3C9A8', '#84B5B5', '#9FB1D6',
+    '#B79FC4', '#D4A5C9', '#A2B9B5', '#C7A79D', '#A9C2C0', '#DE9FB8'
+  ];
+
+  if (donutLabels.length && document.getElementById('bln')) {
+    var ctxBln = document.getElementById('bln').getContext('2d');
+    new Chart(ctxBln, {
+      type: 'doughnut',
+      data: {
+        labels: donutLabels,
+        datasets: [{
+          data: donutData,
+          backgroundColor: warnaPalet,
+          borderWidth: 2,
+          borderColor: '#ffffff',
+          hoverOffset: 4,
+          datalabels: { display: false } 
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '75%', // Membuat lingkaran donut lebih tipis di bagian tengah agar teks muat
+        plugins: {
+          legend: { display: false }, // MATIKAN LEGEND ASLI
+          title: { display: false }
+        }
+      }
+    });
+
+    /*Urutkan indikator warna pada tabel HTML agar cocok dengan potongan chart secara dinamis*/
+    var indicators = document.querySelectorAll('.donut-color-indicator');
+    indicators.forEach(function(indicator, index) {
+      if (warnaPalet[index]) {
+        indicator.style.backgroundColor = warnaPalet[index];
+      }
+    });
+  }
+
+    /*Tren Chart*/
+    if (trendLabels.length && document.getElementById('trendKasus')){
+      var ctxTrend = document.getElementById('trendKasus').getContext('2d');
+      new Chart(ctxTrend, {
+    type: 'line',
+    data: {
+      labels: trendLabels,
+      datasets: [
+        {
+          label: 'Trend Data',
+          data: trendData,
+          borderColor: '#7eb439',
+          backgroundColor: 'rgba(126, 180, 57, 0.1)',
+          tension: 0.2,
+          fill: false,
+          datalabels: {display: false}
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      aspectRatio: 3,
+      plugins: { 
+        legend: { display: true, position: 'top' }, 
+        datalabels: { font: { size: 10, weight: 'bold' } },
+        title: {
+            display: true,
+            text: 'Tren Fluktuasi Kasus DBD dari Waktu ke Waktu (Kronologis)',
+            font: { size: 14, weight: 'bold' },
+            padding: { bottom: 15 }
+          }
+        },
+        scales: {
+          x: {
+            grid: { display: false }, 
+            ticks: {
+              font: { size: 8}
+            }
+          },
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: 'Jumlah Kasus' }
+          }
+        }
+      },
+      plugins: [ChartDataLabels]
+    });
+  }
+});
+</script>
 
 {% if show_table %}
 <div class="table-wrapper">

@@ -95,14 +95,20 @@ def dashboard():
 
     error = None
 
+    # Inisialisasi variabel agar tidak memicu error 'UnboundLocalError' saat pertama dibuka
+    labels_periode = []
+    columns_list = []
+    missing_values_list = []
+    bulan_labels = []
+    bulan_data = []
+
     last_file = get_last_file()
     df = None
 
     if last_file:
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], last_file)
-        if os.path.exists(filepath) and last_file.endswith('.csv'):
-            df = pd.read_csv(filepath, sep=';')
-            df = df.fillna("Data tidak tersedia")
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], last_file)
+            if os.path.exists(filepath) and last_file.endswith('.csv'):
+                df = pd.read_csv(filepath, sep=';')
 
     if form.validate_on_submit():
         file = form.file.data
@@ -120,14 +126,10 @@ def dashboard():
                 df = pd.read_csv(filepath, sep=';')
 
                 df = df.rename(columns={
-                    'tahun': 'Tahun',
-                    'Tahun': 'Tahun',
-                    'bulan': 'Bulan',
-                    'Bulan': 'Bulan',
-                    'jumlah kasus': 'Jumlah Kasus',
-                    'Jumlah Kasus': 'Jumlah Kasus',
-                    'abj': 'Angka Bebas Jentik (ABJ)',
-                    'ABJ': 'Angka Bebas Jentik (ABJ)'
+                    'tahun': 'Tahun','Tahun': 'Tahun',
+                    'bulan': 'Bulan','Bulan': 'Bulan',
+                    'jumlah kasus': 'Jumlah Kasus','Jumlah Kasus': 'Jumlah Kasus',
+                    'abj': 'Angka Bebas Jentik (ABJ)','ABJ': 'Angka Bebas Jentik (ABJ)'
                })
                 
                 df = df.fillna("Data tidak tersedia")
@@ -142,6 +144,55 @@ def dashboard():
     if df is not None:
         jumlah_data = len(df)
 
+        #Missing Value
+        missing_counts = df.isnull().sum()
+        kolom_dibuang = ['No', 'no', 'Nomor', 'nomor', 'id', 'ID', 'Id']
+        
+        kolom_ada_yang_dibuang = [col for col in kolom_dibuang if col in missing_counts.index]
+        if kolom_ada_yang_dibuang:
+            missing_counts = missing_counts.drop(labels=kolom_ada_yang_dibuang)
+
+        columns_list = missing_counts.index.tolist()       
+        missing_values_list = missing_counts.values.tolist()
+
+        #Chart Bulan
+
+        bulan_map = {
+            'Jan': 'Januari', 'Feb': 'Februari', 'Peb': 'Februari', 'Mar': 'Maret',
+            'Apr': 'April', 'Mei': 'Mei', 'May': 'Mei', 'Jun': 'Juni',
+            'Jul': 'Juli', 'Agu': 'Agustus', 'Ags': 'Agustus', 'Aug': 'Agustus',
+            'Sep': 'September', 'Okt': 'Oktober', 'Oct': 'Oktober',
+            'Nov': 'November', 'Des': 'Desember', 'Dec': 'Desember',
+
+            'januari': 'Januari', 'februari': 'Februari', 'maret': 'Maret',
+            'april': 'April', 'mei': 'Mei', 'may': 'Mei', 'juni': 'Juni',
+            'juli': 'Juli', 'agustus': 'Agustus','september': 'September',
+            'oktober': 'Oktober','november': 'November', 'desember': 'Desember'
+        }
+        
+        # Bersihkan spasi, ubah ke Title Case (huruf kapital di awal), lalu ambil 3 huruf pertamanya untuk dicocokkan
+        df['Bulan_Singkat'] = df['Bulan'].astype(str).str.strip().str.title().str[:3]
+        df['Bulan'] = df['Bulan_Singkat'].map(bulan_map).fillna(df['Bulan'])
+        df = df.drop(columns=['Bulan_Singkat']) #
+
+        total_per_bulan = df.groupby('Bulan')['Jumlah Kasus'].sum()
+        
+        urutan_bulan = [
+            'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
+            'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+        ]
+        total_per_bulan = total_per_bulan.reindex(urutan_bulan, fill_value=0)
+        
+        total_per_bulan_sorted = total_per_bulan.sort_values(ascending=False)
+
+        # 4. Hitung total kasus keseluruhan untuk mencari persentase nanti
+        total_kasus_all = int(total_per_bulan_sorted.sum())
+
+        # 5. Siapkan data terurut untuk dikirim ke template HTML
+        bulan_labels = total_per_bulan_sorted.index.tolist()
+        bulan_data = total_per_bulan_sorted.values.tolist()
+
+        #Data tertinggi dan Terendah
         idx_max = df['Jumlah Kasus'].idxmax()
         idx_min = df['Jumlah Kasus'].idxmin()
         kasus_tertinggi = (
@@ -156,11 +207,24 @@ def dashboard():
         bulan_terendah = (
             f"{df.loc[idx_min, 'Bulan']} {int(df.loc[idx_min, 'Tahun'])}"
         )
+
+        #Rata-Rata
         rata_rata = round(df['Jumlah Kasus'].mean(), 2)
+
+        #Rentang tahun
         periode_tahun = f"{df['Tahun'].min()} - {df['Tahun'].max()}"
+
+        # jika kolom Tahun atau Bulan berisi missing value (NaN)
+        df['Tahun'] = df['Tahun'].fillna("N/A")
+        df['Bulan'] = df['Bulan'].fillna("N/A")
+        
+        periode_tahun = f"{df['Tahun'].replace('N/A', np.nan).min()} - {df['Tahun'].replace('N/A', np.nan).max()}"
+
+        labels_periode = (df['Tahun'].astype(str) + "-" + df['Bulan'].astype(str)).tolist()
 
         columns = df.columns.tolist()
         data = df.values.tolist()
+        data_kronologis = df['Jumlah Kasus'].values.tolist()
         show_table = True
 
     return render_template(
@@ -171,12 +235,20 @@ def dashboard():
         columns=columns,
         data=data,
         jumlah_data=jumlah_data,
+
+        labels=labels_periode, 
+        title=columns_list,
+        missing=missing_values_list,
+        bulan=bulan_labels,
+        jml_bulan=bulan_data,
+        total_kasus_all=total_kasus_all,
         kasus_tertinggi=kasus_tertinggi,
         kasus_terendah=kasus_terendah,
         bulan_tertinggi=bulan_tertinggi,
         bulan_terendah=bulan_terendah,
         rata_rata=rata_rata,
         periode_tahun=periode_tahun,
+        trend=data_kronologis,
         error=error
     )
 

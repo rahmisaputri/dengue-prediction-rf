@@ -178,7 +178,8 @@ h1{
 
 .judul {
 background: #5d7d48;
-  padding: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   margin-left: 15px;
   font-size: 20px;
   color: #ffffff;
@@ -299,27 +300,27 @@ button:hover, input[type="submit"]:hover {
 
 .card {
   border-radius: 12px;
-  padding: 10px;
-  margin: 15px;
+  padding: 5px;
+  margin: 10px;
   width: 200px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  border: 1px solid #c7c7bad2;
+  border: 1px solid #455c36;
   text-align: left;
 }
 
 .card h3 {
-  margin: 10px;
-  font-size: 16px;
-  color: #f6f8f9;
+  margin: 5px;
+  font-size: 14px;
+  color: #000;
   text-align: center;
   font-weight: 300;
 }
 
 .card .value {
-  margin: 10px;
-  font-size: 16px;
+  margin: 5px;
+  font-size: 15px;
   font-weight: bold;
-  color: #ffffff;
+  color: #000;
   text-align: center;
 }
 
@@ -367,6 +368,135 @@ button:hover, input[type="submit"]:hover {
   z-index: 2;
 }
 
+/* Kontainer Utama Dashboard */
+.dashboard-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* Wrapper untuk Chart 1: Missing Values */
+.miss-chart-wrapper {
+  flex: 1;
+  min-width: 300px;
+  max-width: 400px;
+  background: #f2f2f2;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Wrapper Kontainer Utama Chart 2: Donut Chart */
+.chart-container {
+  flex: 1;
+  min-width: 350px;
+  max-width: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  background: #f2f2f2;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Lingkaran Donut (Kolom Kiri) */
+.donut-wrapper {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  flex-shrink: 0;
+}
+
+/* Teks Tengah di Dalam Lubang Donut */
+.donut-center-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.donut-total-number {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333333;
+  display: block;
+  line-height: 1;
+}
+
+.donut-total-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #888888;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Legend Tabel (Kolom Kanan) */
+.legend-column {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.legend-title {
+  font-size: 13px;
+  font-weight: bold;
+  color: #555555;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+
+.legend-scroll-area {
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.legend-table {
+  width: 100%;
+  font-size: 12px;
+  border-collapse: collapse;
+  color: #4A4A4A;
+}
+
+.legend-row {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.legend-cell-label {
+  padding: 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-cell-value {
+  text-align: right;
+  font-weight: bold;
+  padding: 6px 0;
+  color: #333333;
+}
+
+/* Indikator Kotak Warna Grafik */
+.donut-color-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.bulan-text {
+  font-weight: 500;
+}
+
 
 /* Halaman Visualisasi */
 .model-container {
@@ -401,8 +531,26 @@ button:hover, input[type="submit"]:hover {
   color: #212529;
 }
 
+.visual-container {
+  display: flex;
+  gap: 0;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+}
+
+.chart-visual {
+  margin: 0 auto 5px auto;
+  padding: 10px;
+  background-color: #F8F9FA; 
+  border-radius: 8px;        
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+  margin: 15px;
+  border: 1px solid #E0E0E0;
+}
+
 .ket-card{
-  font-size: 13px;
+  font-size: 9px;
   padding: 5px;
   padding-top: 0;
   color: #757575;
