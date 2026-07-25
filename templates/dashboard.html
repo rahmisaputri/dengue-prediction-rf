@@ -26,14 +26,14 @@
   {% endif %}
 
 <div class="card-container">
-  <div class="card" style="background-color: #F8F9FA;">
+  <div class="card" style="border: 1.3px solid #5e7892;  box-shadow: 1px 0 5px #5e7892;">
     <h3>Data Tersedia</h3>
     <p class="value">
       {{ jumlah_data }} Data Bulanan
     </p>
   </div>
 
-  <div class="card" style="background-color: #dc2626;">
+  <div class="card" style="border: 1.3px solid #c63e4e;  box-shadow: 1px 0 5px #c63e4e;">
     <h3>Kasus Tertinggi</h3>
     <p class="value">
       Pada {{ bulan_tertinggi }} <br>
@@ -41,7 +41,7 @@
     </p>
   </div>
 
-    <div class="card" style="background-color: #7eb439;">
+    <div class="card" style="border: 1.3px solid #809671;  box-shadow: 1px 0 5px #809671;">
     <h3>Kasus Terendah</h3>
     <p class="value">
       Pada {{ bulan_terendah }} <br>
@@ -49,14 +49,14 @@
     </p>
   </div>
 
-  <div class="card" style="background-color: #F8F9FA;">
+  <div class="card" style="border: 1.3px solid #e75c16; box-shadow: 1px 0 5px #e75c16;">
     <h3>Rata-Rata Bulanan</h3>
     <p class="value">
       {{ rata_rata }} Kasus
     </p>
   </div>
 
-  <div class="card" style="background-color: #F8F9FA;">
+  <div class="card" style="border: 1.3px solid #775144;  box-shadow: 1px 0 5px #775144;">
     <h3>Periode Data</h3>
     <p class="value">
       {{ periode_tahun }}
@@ -109,7 +109,10 @@
   </div>
 </div>
 
-<div class="trend-chart-wrapper" style="width: 100%; max-width: 1120px; background: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); margin: 20px auto 0 auto;">
+<div class="trend-chart-wrapper" 
+style="width: 100%; max-width: 1120px; background: #ffffff; padding: 20px; 
+border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); 
+margin: 20px auto 0 auto;">
   <canvas id="trendKasus" height="120px"></canvas>
 </div>
 
@@ -190,7 +193,7 @@ document.addEventListener("DOMContentLoaded", function () {
         maintainAspectRatio: false,
         cutout: '75%', // Membuat lingkaran donut lebih tipis di bagian tengah agar teks muat
         plugins: {
-          legend: { display: false }, // MATIKAN LEGEND ASLI
+          legend: { display: false }, 
           title: { display: false }
         }
       }
@@ -232,7 +235,7 @@ document.addEventListener("DOMContentLoaded", function () {
         datalabels: { font: { size: 10, weight: 'bold' } },
         title: {
             display: true,
-            text: 'Tren Fluktuasi Kasus DBD dari Waktu ke Waktu (Kronologis)',
+            text: 'Tren Fluktuasi Kasus DBD dari Waktu ke Waktu',
             font: { size: 14, weight: 'bold' },
             padding: { bottom: 15 }
           }

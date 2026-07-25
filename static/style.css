@@ -1,8 +1,8 @@
 body{
-	background-color: #ffffff;
-	font-size: 15px;
+	background-color: #F5F7FA;
+	font-size: 13px;
 	color: #000000;
-	font-family: arvo;
+	font-family: 'poppins';
   margin: 0;        /* menghapus jarak default dari browser */
   padding: 0;
 }
@@ -16,7 +16,7 @@ body{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: arvo;
+    font-family: 'poppins';
 }
 
 .lgn {
@@ -151,94 +151,117 @@ body{
 }
 
 
-/* Base */
-h1{
-  text-align: center;
-  color: #1b1f3b;
-  margin: 0;
-}
-
-.logout{
-  text-align: right;
-  font-size: 15px;
-  margin: 0;
-  padding: 0;
-}
-
-.logout a{
-  color: #fff;
-}
-
-.content{
-  background: #a9c191;
-  border-radius: 8px;
-  margin-top: 0;
-  border-bottom: 2px solid #413e3e60;
-}
-
-.judul {
-background: #5d7d48;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-left: 15px;
-  font-size: 20px;
-  color: #ffffff;
-  border-radius: 8px;
-  text-align: center;
-  border-bottom: 1.5px solid #413e3e60;
-}
-
-/* Tombol Navigasi */
-.nav {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  font-size: 16px;
-  color: #000;
-  margin: 0;
-  padding: 15px 0;
-  position: fixed;
-  top: 70px;
-  width: 100%;
-  z-index: 999;
-  background-color: #ffffff;
-  border-radius: 10px;
-}
-
-.nav a {
-  color: #333;
-  text-decoration: none;
-  font-weight: 600;
-  padding: 10px 0;
-  transition: border-bottom 0.3s;
-  flex: 1;
-  text-align: center;
-  border-radius: 10px;
-}
-
-.nav a.active {
-  border-bottom: 2px solid #bfcfbb; /* warna hijau seperti dashboard */
-  padding-bottom: 8px;
-  font-weight: 700;
-  border-radius: 10px;
-}
-
-.nav a:hover {
-   border-bottom: 2px solid #bfcfbb;
-   width: 300px;
-   transform-origin: center;
-   left: 50%;
-}
-
+/* ==========================================================================
+   HEADER UTAMA (Wadah Tunggal Satu Baris)
+   ========================================================================== */
 .content {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
+header {
+  background: #455c36; /* Warna hijau daun asli Anda */
+  display: flex;                  
+  justify-content: space-between; /* Judul di kiri, Nav di tengah, Logout di kanan */
+  align-items: center;            /* Menyejajarkan posisi vertikal agar rata tengah */
+  padding: 12px 30px;             
+  box-sizing: border-box;         
+}
+
+/* Mengatur teks judul (Sisi Kiri) */
+.judul {
+  color:#D8E3D3;;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 1.2;
+  flex-shrink: 0; /* Mencegah judul gepeng/menyusut */
+  opacity:.8;
+}
+
+.judul p {
+  margin: 2px 0 0 0;
+  font-size: 13px;
+  font-weight: normal;
+  opacity: 0.85;
+}
+
+/* ==========================================================================
+   TOMBOL NAVIGASI (Sisi Tengah - Sejajar)
+   ========================================================================== */
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 15px; /* Jarak antar menu navigasi */
+  margin: 0 20px;
+  padding: 0;
+  background-color: transparent; /* Menghapus latar abu-abu agar menyatu dengan hijau */
+  box-shadow: none;
+  border-radius: 0;
+  position: static; /* Menghapus posisi fixed/relative lama */
+  width: auto;
+}
+
+/* Gaya Link Navigasi di Atas Latar Hijau */
+.nav a {
+  color:#D8E3D3; /* Warna teks putih agak abu agar tidak terlalu mencolok */
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 16px;
+  text-align: center;
+  transition: all 0.2s;
+  border-bottom: 2px solid transparent; /* Garis bawah transparan */
+  box-shadow: none;
+  border-radius: 0;
+  flex: none;
+}
+
+/* Menu Aktif: Berwarna Putih Terang dengan Garis Bawah Putih */
+.nav a.active {
+  color: #FFFFFF; 
+  border-bottom: 2px solid #FFFFFF; 
+  font-weight: 700;
+  background-color: transparent;
+}
+
+/* Efek Hover di Latar Hijau */
+.nav a:hover {
+  color: #FFFFFF;
+  border-bottom: 2px solid #bfcfbb;
+  width: auto; /* Memastikan tidak ada bug melompat lebar */
+}
+
+/* ==========================================================================
+   TOMBOL LOGOUT (Sisi Kanan)
+   ========================================================================== */
+.logout {
+  flex-shrink: 0;
+}
+
+.logout a {
+  background-color: #F8F9FA;;     
+  color: #333333;
+  text-decoration: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  display: inline-block;
+  transition: all 0.2s;
+}
+
+.logout a:hover {
+  background-color: #333333;    
+  color: #FFFFFF;
+}
+
+
 .container {
-  margin-top: 140px; /* kasih jarak supaya konten tidak ketutup */
+  margin-top: 70px; /* kasih jarak supaya konten tidak ketutup */
 }
 
 
@@ -250,12 +273,12 @@ background: #5d7d48;
 .upload{
   padding: 5px;
   color: #000000;
-  border-radius: 12px;
+  border-radius: 7px;
   text-align: center;
-  border: 1px solid #333;
+  border: 1px solid #E0E0E0;
   margin-left: 20px;
   margin-right: 20px;
-  background: #c7c7bad2;
+  background-color: #ffffff;
 }
 
 input[type="file"] {
@@ -266,7 +289,7 @@ button, input[type="submit"] {
   background: #000000ba;
   color: #fff;
   border: none;
-  padding: 10px 16px;
+  padding: 10px 13px;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 200;
@@ -303,14 +326,16 @@ button:hover, input[type="submit"]:hover {
   padding: 5px;
   margin: 10px;
   width: 200px;
+  height: 85px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  border: 1px solid #455c36;
+  background-color: #fff;
   text-align: left;
+  margin-bottom:25px;
 }
 
 .card h3 {
   margin: 5px;
-  font-size: 14px;
+  font-size: 12px;
   color: #000;
   text-align: center;
   font-weight: 300;
@@ -318,7 +343,7 @@ button:hover, input[type="submit"]:hover {
 
 .card .value {
   margin: 5px;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: bold;
   color: #000;
   text-align: center;
@@ -346,7 +371,7 @@ button:hover, input[type="submit"]:hover {
 }
 
 .data-table tr:nth-child(even) {
-  background: #f2f2f2;
+  background: #ffffff;
 }
 .table-wrapper {
   max-height: 400px;      /* tinggi area scroll */
@@ -383,7 +408,7 @@ button:hover, input[type="submit"]:hover {
   flex: 1;
   min-width: 300px;
   max-width: 400px;
-  background: #f2f2f2;
+  background: #ffffff;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
@@ -398,7 +423,7 @@ button:hover, input[type="submit"]:hover {
   align-items: center;
   justify-content: space-between;
   gap: 30px;
-  background: #f2f2f2;
+  background: #ffffff;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
@@ -508,7 +533,7 @@ button:hover, input[type="submit"]:hover {
 }
 
 .model {
-  background: #F8F9FA;
+  background: #ffffff;
   border-radius: 12px;
   padding: 10px;
   margin: 15px;
@@ -520,13 +545,13 @@ button:hover, input[type="submit"]:hover {
 
 .model h3 {
   margin: 5px;
-  font-size: 15px;
+  font-size: 14px;
   color: #4b6540;
 }
 
 .model .value {
   margin: 5px;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 800;
   color: #212529;
 }
@@ -539,10 +564,14 @@ button:hover, input[type="submit"]:hover {
   width: 100%;
 }
 
+.chart-title{
+  font-size: 14px;
+}
+
 .chart-visual {
   margin: 0 auto 5px auto;
   padding: 10px;
-  background-color: #F8F9FA; 
+  background-color: #ffffff; 
   border-radius: 8px;        
   box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
   margin: 15px;
@@ -550,7 +579,7 @@ button:hover, input[type="submit"]:hover {
 }
 
 .ket-card{
-  font-size: 9px;
+  font-size: 10px;
   padding: 5px;
   padding-top: 0;
   color: #757575;
@@ -596,7 +625,7 @@ button:hover, input[type="training"]:hover {
 .pilihan {
   margin: 0;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .input-bulan {
@@ -604,7 +633,7 @@ button:hover, input[type="training"]:hover {
   padding: 8px;
   border-radius: 6px;
   border: 1px solid #333;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 /* ===== CONTAINER INPUT ===== */
@@ -624,7 +653,7 @@ button:hover, input[type="training"]:hover {
 /*Catatan untuk Lag*/
 .keterangan{
   text-align: center;
-  font-size: 15px;
+  font-size: 13px;
   color: #4f4f4f;
   justify-content: center;
   padding: 10px;
@@ -632,7 +661,7 @@ button:hover, input[type="training"]:hover {
 }
 .ket-lag{
   display: flex;
-  font-size: 13px;
+  font-size: 12px;
   align-items: flex-start;
   padding: 10px;
   padding-bottom: 0;
@@ -659,7 +688,7 @@ button:hover, input[type="training"]:hover {
   display: flex;
   flex-direction: column;
   width: 110px;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 500;
   text-align: center;
 }
@@ -670,7 +699,7 @@ button:hover, input[type="training"]:hover {
   border-radius: 8px;
   border: 1px solid #333;
   text-align: center;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 /* ===== BUTTON ===== */
@@ -683,8 +712,9 @@ button:hover, input[type="training"]:hover {
   color: #ffffff;
   border-radius: 10px;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 16px;
   transition: 0.3s;
+  font-weight: 600;
 }
 
 .btn-prediksi:hover {
@@ -701,17 +731,19 @@ h4{
   text-align: center;
   margin: 10px;
   margin-bottom: 5px;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 /* Tombol Cetak */
 .btn-cetak{
-  background-color: rgb(166, 163, 163);
+  background-color: #ffffff ;
   color: #000;
   margin: 0;
   text-align: center;
   margin-left: 30px;
   padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #333;
 }
 .btn-cetak:hover {
   background: #000;
@@ -759,7 +791,7 @@ h4{
   border: 1px solid #333;
   padding: 8px;
   text-align: center;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .tabel th {
@@ -829,6 +861,7 @@ h4{
   background: #fff;
   color: #000;
   font-size: 14px;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .kop {

@@ -4,21 +4,22 @@
   <title>Dashboard</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 </head>
 <body>
 
 <div class="content">
   <header>
-    <h1 class="judul">
-      Prediksi Jumlah Kasus DBD dengan Random Forest Regression
-    </h1>
-    {% if session.get('login') %}
-    <div class="logout">
-      <a href="{{ url_for('logout') }}">Logout</a>
+    <div class="judul">
+      Prediksi Jumlah Kasus DBD<br>
+       <p>Dashboard Analisis Menggunakan Random Forest Regression </p>
     </div>
-    {% endif %}
-  </header>
-</div>
+
 
 {% if session.get('login') %}
 <nav class="nav">
@@ -27,6 +28,15 @@
   <a href="{{ url_for('prediksi') }}" class="{% if request.path == '/prediksi' %}active{% endif %}">Prediksi Kasus</a>
 </nav>
 {% endif %}
+
+    {% if session.get('login') %}
+    <div class="logout">
+      <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+    {% endif %}
+
+  </header>
+</div>
 
 <div class="container">
   {% block content %}{% endblock %}
