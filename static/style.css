@@ -293,7 +293,7 @@ button, input[type="submit"] {
   border-radius: 8px;
   cursor: pointer;
   font-weight: 200;
-  font-size: 14px;
+  font-size: 13px;
 
 }
 
@@ -304,7 +304,7 @@ button:hover, input[type="submit"]:hover {
 
 .ket{
   text-align: center;
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .success {
@@ -589,13 +589,14 @@ button:hover, input[type="submit"]:hover {
   padding: 10px 20px;
   margin: 20px;
   margin-top: 0;
-  background: #c7c7bad2;
+  background: #ffffff;
   color: #000000;
-  border: 1px solid #000000;
+  border: 1px solid #E0E0E0;
   border-radius: 8px;
   cursor: pointer;
   width: 97%;
-  font-size: 18px;
+  font-size: 15px;
+  font-weight: 400;
 }
 
 button:hover, input[type="training"]:hover {
@@ -614,8 +615,8 @@ button:hover, input[type="training"]:hover {
   justify-content: space-between;
   align-items: center;
   padding: 10px 10px;
-  background: #c7c7bad2;
-  border: 1px solid #333;
+  background: #ffffff;
+  border: 1px solid #E0E0E0;
   border-radius: 10px;
   margin: 30px;
   margin-top: 0;
@@ -645,7 +646,7 @@ button:hover, input[type="training"]:hover {
   padding: 20px;
   margin: auto;
   width: 95%;
-  background: #f9f9f9;
+  background: #ffffff;
   border-radius: 12px;
   border: 1px solid #ddd;
 }
@@ -712,7 +713,7 @@ button:hover, input[type="training"]:hover {
   color: #ffffff;
   border-radius: 10px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 15px;
   transition: 0.3s;
   font-weight: 600;
 }
@@ -731,7 +732,7 @@ h4{
   text-align: center;
   margin: 10px;
   margin-bottom: 5px;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 /* Tombol Cetak */
