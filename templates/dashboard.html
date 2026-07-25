@@ -371,12 +371,12 @@ function generateTrendAnalysis(labels, data) {
 
     if (labelLonjakan && lonjakanTerbesar > 0) {
       let [tahunL, bulanL] = labelLonjakan.split('-');
-      listHTML += `<li>🚀 <b>Percepatan Wabah Tercepat:</b> Penyebaran kasus bergerak paling agresif pada periode <b>${bulanL.toUpperCase()} ${tahunL}</b> dengan lonjakan masif sebesar <b>+${lonjakanTerbesar} kasus baru</b> hanya dalam waktu sebulan.</li>`;
+      listHTML += `<li>🚀 <b>Kenaikan Jumlah Kasus Terbesar:</b> Terjadi kenaikan jumlah kasus pada periode <b>${bulanL} ${tahunL}</b>, meningkat sebanyak <b>+${lonjakanTerbesar} kasus baru</b> dibanding bulan sebelumnya.</li>`;
     }
 
     if (labelPenurunan && penurunanTerbesar > 0) {
       let [tahunP, bulanP] = labelPenurunan.split('-');
-      listHTML += `<li>📉 <b>Fase Reduksi Kasus Tercepat:</b> Penurunan grafik paling drastis terjadi pada periode <b>${bulanP.toUpperCase()} ${tahunP}</b>, di mana angka infeksi berhasil berkurang sebanyak <b>-${penurunanTerbesar} kasus</b> dibanding bulan sebelumnya.</li>`;
+      listHTML += `<li>📉 <b>Penurunan Kasus Terbesar:</b> Penurunan grafik paling drastis terjadi pada periode <b>${bulanP} ${tahunP}</b>, di mana angka infeksi berhasil berkurang sebanyak <b>-${penurunanTerbesar} kasus</b> dibanding bulan sebelumnya.</li>`;
     }
 
     if (totalTahun > 0) {
