@@ -85,7 +85,7 @@
 
     <!-- Kolom Kanan: Legend Tabel Custom Terurut -->
     <div class="legend-column">
-      <h4 class="legend-title">Top Performing Months</h4>
+      <h4 class="legend-title">Total Kasus Per Bulan</h4>
       
       <div class="legend-scroll-area">
         <table class="legend-table">
@@ -115,6 +115,16 @@ border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 margin: 20px auto 0 auto;">
   <canvas id="trendKasus" height="120px"></canvas>
 </div>
+
+<div id="analisisTrenContainer" style="margin-top: 15px; padding: 12px; border-left: 4px solid #c63e4e; background-color: #fdf5f5; font-size: 13px; line-height: 1.6;">
+  <strong>💡 Insight Analisis Tren:</strong>
+  <p id="teksAnalisisTren" style="padding-left: 40px;"> Sedang menganalisis data...</p>
+  
+  <!-- 👇 Cukup sisipkan baris ini di HTML Anda -->
+  <ul id="insightTambahanList" style="margin: 8px 0; padding-left: 40px; list-style-type: square; line-height: 1.7;"></ul>
+</div>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
@@ -229,7 +239,7 @@ document.addEventListener("DOMContentLoaded", function () {
           data: trendData,
           borderColor: '#c63e4e',
           backgroundColor: '#c63e4e',
-          tension: 0.2,
+          tension: 0.1,
           fill: false,
           datalabels: {display: false}
         }
@@ -275,8 +285,128 @@ document.addEventListener("DOMContentLoaded", function () {
       plugins: [ChartDataLabels]
     });
   }
+
+  // 👇 MEMANGGIL FUNGSI INSIGHT SEBELUM DOMCONTENTLOADED SELESAI
+  generateTrendAnalysis(trendLabels, trendData);
 });
+
+// 👇 FUNGSI TAMBAHAN INSIGHT OTOMATIS (TARUH DI LUAR EVENT LISTENER)
+function generateTrendAnalysis(labels, data) {
+  if (!labels.length || !data.length) return;
+
+  const dataPerTahun = {};
+
+  labels.forEach((label, index) => {
+    if (typeof label === 'string' && label.includes('-')) {
+      const [tahun, bulanStr] = label.split('-');
+      const nilaiKasus = data[index];
+      const bulanAngka = konversiBulanKeAngka(bulanStr.toLowerCase());
+
+      if (!dataPerTahun[tahun]) {
+        dataPerTahun[tahun] = [];
+      }
+      dataPerTahun[tahun].push({ bulan: bulanAngka, namaBulan: bulanStr, nilai: nilaiKasus });
+    }
+  });
+
+  let hitungAwalTahun = 0;       
+  let hitungPertengahanTahun = 0; 
+  let hitungAkhirTahun = 0;      
+
+  for (const tahun in dataPerTahun) {
+    const listBulan = dataPerTahun[tahun];
+    if (listBulan.length === 0) continue;
+
+    const dataTertinggi = listBulan.reduce((max, item) => item.nilai > max.nilai ? item : max, listBulan);
+    
+    if (dataTertinggi.bulan >= 1 && dataTertinggi.bulan <= 4) {
+      hitungAwalTahun++;
+    } else if (dataTertinggi.bulan >= 5 && dataTertinggi.bulan <= 8) {
+      hitungPertengahanTahun++;
+    } else if (dataTertinggi.bulan >= 9 && dataTertinggi.bulan <= 12) {
+      hitungAkhirTahun++;
+    }
+  }
+
+  let kesimpulanTeks = "";
+  
+  if (hitungAwalTahun >= hitungPertengahanTahun && hitungAwalTahun >= hitungAkhirTahun) {
+    kesimpulanTeks = "<li>📈 Berdasarkan grafik di atas, fluktuasi kasus DBD menunjukkan pola siklus tahunan yang konsisten, di mana lonjakan kasus <strong>cenderung meningkat secara signifikan di awal tahun (kisaran bulan Januari hingga April)</strong>.</li>";
+  } else if (hitungAkhirTahun >= hitungAwalTahun && hitungAkhirTahun >= hitungPertengahanTahun) {
+    kesimpulanTeks = "<li>📈 Berdasarkan grafik di atas, dapat disimpulkan bahwa tren kasus DBD <strong>cenderung mengalami peningkatan tajam di akhir tahun (kisaran bulan September hingga Desember)</strong>.</li>";
+  } else {
+    kesimpulanTeks = "<li>📈 Hasil analisis grafik menunjukkan pergeseran pola di mana kasus <strong>cenderung meningkat di pertengahan tahun (kisaran bulan Mei hingga Agustus)</strong>.</li>";
+  }
+
+  const elemenTeks = document.getElementById('teksAnalisisTren');
+  if (elemenTeks) {
+    elemenTeks.innerHTML = kesimpulanTeks;
+  }
+
+  // =========================================================================
+  // ➕ 🛠️ KODE TAMBAHAN BARU (INSIGHT TANPA MENGUBAH KODE DI ATAS)
+  // =========================================================================
+  let lonjakanTerbesar = 0;
+  let labelLonjakan = "";
+  let penurunanTerbesar = 0;
+  let labelPenurunan = "";
+
+  // 1. Hitung Delta/Selisih Fluktuasi Kecepatan Bulan ke Bulan
+  for (let i = 1; i < data.length; i++) {
+    let selisih = data[i] - data[i - 1];
+
+    if (selisih > lonjakanTerbesar) {
+      lonjakanTerbesar = selisih;
+      labelLonjakan = labels[i];
+    }
+
+    if (selisih < 0 && Math.abs(selisih) > penurunanTerbesar) {
+      penurunanTerbesar = Math.abs(selisih);
+      labelPenurunan = labels[i];
+    }
+  }
+
+  // 2. Hitung Persentase Konsistensi Siklus Berulang
+  let totalTahun = hitungAwalTahun + hitungPertengahanTahun + hitungAkhirTahun;
+  let nilaiPuncakTerbanyak = Math.max(hitungAwalTahun, hitungPertengahanTahun, hitungAkhirTahun);
+  let persentaseKonsistensi = totalTahun > 0 ? Math.round((nilaiPuncakTerbanyak / totalTahun) * 100) : 0;
+  let teksStatusKonsistensi = persentaseKonsistensi >= 70 ? "Sangat Teratur (Siklus Musiman Stabil)" : "Variatif (Banyak Dipengaruhi Anomali Cuaca)";
+
+  // 3. Injeksi Hasil ke HTML List Baru
+  const elemenList = document.getElementById('insightTambahanList');
+  if (elemenList) {
+    let listHTML = "";
+
+    if (labelLonjakan && lonjakanTerbesar > 0) {
+      let [tahunL, bulanL] = labelLonjakan.split('-');
+      listHTML += `<li>🚀 <b>Percepatan Wabah Tercepat:</b> Penyebaran kasus bergerak paling agresif pada periode <b>${bulanL.toUpperCase()} ${tahunL}</b> dengan lonjakan masif sebesar <b>+${lonjakanTerbesar} kasus baru</b> hanya dalam waktu sebulan.</li>`;
+    }
+
+    if (labelPenurunan && penurunanTerbesar > 0) {
+      let [tahunP, bulanP] = labelPenurunan.split('-');
+      listHTML += `<li>📉 <b>Fase Reduksi Kasus Tercepat:</b> Penurunan grafik paling drastis terjadi pada periode <b>${bulanP.toUpperCase()} ${tahunP}</b>, di mana angka infeksi berhasil berkurang sebanyak <b>-${penurunanTerbesar} kasus</b> dibanding bulan sebelumnya.</li>`;
+    }
+
+    if (totalTahun > 0) {
+      listHTML += `<li>🔄 <b>Keteraturan Perulangan Siklus:</b> Tingkat kesamaan pola lonjakan tahun ke tahun di dalam dataset ini mencapai <b>${persentaseKonsistensi}%</b>, mengindikasikan karakteristik tren jangka panjang yang <i>${teksStatusKonsistensi}</i>.</li>`;
+    }
+
+    elemenList.innerHTML = listHTML;
+  }
+}
+
+function konversiBulanKeAngka(bulan) {
+  const listBulan = {
+    'januari': 1, 'jan': 1, 'februari': 2, 'feb': 2, 'maret': 3, 'mar': 3,
+    'april': 4, 'apr': 4, 'mei': 5, 'juni': 6, 'jun': 6, 'juli': 7, 'jul': 7,
+    'agustus': 8, 'agt': 8, 'agu': 8, 'september': 9, 'sep': 9, 'oktober': 10, 'okt': 10,
+    'november': 11, 'nov': 11, 'desember': 12, 'des': 12
+  };
+  return listBulan[bulan] || 1; 
+}
+
 </script>
+
 
 {% if show_table %}
 <div class="table-wrapper">
