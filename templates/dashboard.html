@@ -66,12 +66,12 @@
 
 <div class="dashboard-container">
   
-  <!-- Chart 1: Missing Values -->
+  <!-- Chart Missing Values -->
   <div class="miss-chart-wrapper">
     <canvas id="miss" height="400px" width="400px"></canvas>
   </div>
 
-  <!-- Chart 2: Donut Chart Bulanan Terurut -->
+  <!-- Chart Donut Chart Bulanan Terurut -->
   <div class="chart-container">
     
     <!-- Kolom Kiri: Lingkaran Donut dengan Teks di Tengah -->
@@ -83,7 +83,6 @@
       </div>
     </div>
 
-    <!-- Kolom Kanan: Legend Tabel Custom Terurut -->
     <div class="legend-column">
       <h4 class="legend-title">Total Kasus Per Bulan</h4>
       
@@ -120,7 +119,6 @@ margin: 20px auto 0 auto;">
   <strong>💡 Insight Analisis Tren:</strong>
   <p id="teksAnalisisTren" style="padding-left: 40px;"> Sedang menganalisis data...</p>
   
-  <!-- 👇 Cukup sisipkan baris ini di HTML Anda -->
   <ul id="insightTambahanList" style="margin: 8px 0; padding-left: 40px; list-style-type: square; line-height: 1.7;"></ul>
 </div>
 
@@ -131,7 +129,6 @@ margin: 20px auto 0 auto;">
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  // Parsing data dari Flask ke JavaScript secara aman
   var chartTitle    = {{ title | tojson | safe if title else "[]" }};
   var chartMissing  = {{ missing | tojson | safe if missing else "[]" }};
 
@@ -185,7 +182,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
  //# ===== 2. Donut Chart: Bulan Tertinggi (2017-2024) =====
-// Gunakan palet warna medium soft yang Anda sukai sebelumnya
   var warnaPalet = [
     '#E09F9D', '#E6B89C', '#E0C79B', '#A3C9A8', '#84B5B5', '#9FB1D6',
     '#B79FC4', '#D4A5C9', '#A2B9B5', '#C7A79D', '#A9C2C0', '#DE9FB8'
@@ -209,7 +205,7 @@ document.addEventListener("DOMContentLoaded", function () {
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        cutout: '75%', // Membuat lingkaran donut lebih tipis di bagian tengah agar teks muat
+        cutout: '75%', 
         plugins: {
           legend: { display: false }, 
           title: { display: false }
@@ -217,7 +213,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-    /*Urutkan indikator warna pada tabel HTML agar cocok dengan potongan chart secara dinamis*/
+    
     var indicators = document.querySelectorAll('.donut-color-indicator');
     indicators.forEach(function(indicator, index) {
       if (warnaPalet[index]) {
@@ -286,11 +282,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // 👇 MEMANGGIL FUNGSI INSIGHT SEBELUM DOMCONTENTLOADED SELESAI
+  // Insight
   generateTrendAnalysis(trendLabels, trendData);
 });
 
-// 👇 FUNGSI TAMBAHAN INSIGHT OTOMATIS (TARUH DI LUAR EVENT LISTENER)
 function generateTrendAnalysis(labels, data) {
   if (!labels.length || !data.length) return;
 
@@ -343,15 +338,12 @@ function generateTrendAnalysis(labels, data) {
     elemenTeks.innerHTML = kesimpulanTeks;
   }
 
-  // =========================================================================
-  // ➕ 🛠️ KODE TAMBAHAN BARU (INSIGHT TANPA MENGUBAH KODE DI ATAS)
-  // =========================================================================
   let lonjakanTerbesar = 0;
   let labelLonjakan = "";
   let penurunanTerbesar = 0;
   let labelPenurunan = "";
 
-  // 1. Hitung Delta/Selisih Fluktuasi Kecepatan Bulan ke Bulan
+  // Hitung Delta/Selisih Fluktuasi Kecepatan Bulan ke Bulan
   for (let i = 1; i < data.length; i++) {
     let selisih = data[i] - data[i - 1];
 
@@ -366,13 +358,13 @@ function generateTrendAnalysis(labels, data) {
     }
   }
 
-  // 2. Hitung Persentase Konsistensi Siklus Berulang
+  //Hitung Persentase Konsistensi Siklus Berulang
   let totalTahun = hitungAwalTahun + hitungPertengahanTahun + hitungAkhirTahun;
   let nilaiPuncakTerbanyak = Math.max(hitungAwalTahun, hitungPertengahanTahun, hitungAkhirTahun);
   let persentaseKonsistensi = totalTahun > 0 ? Math.round((nilaiPuncakTerbanyak / totalTahun) * 100) : 0;
   let teksStatusKonsistensi = persentaseKonsistensi >= 70 ? "Sangat Teratur (Siklus Musiman Stabil)" : "Variatif (Banyak Dipengaruhi Anomali Cuaca)";
 
-  // 3. Injeksi Hasil ke HTML List Baru
+  // Injeksi Hasil ke HTML List Baru
   const elemenList = document.getElementById('insightTambahanList');
   if (elemenList) {
     let listHTML = "";
