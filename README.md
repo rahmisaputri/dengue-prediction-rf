@@ -22,35 +22,40 @@ Peramalan jumlah kasus DBD bulanan menggunakan algoritma Random Forest di Python
 - Kasus terendah
 - Rata-rata kasus per bulan
 - Periode data yanng di upload
-<img width="1280" height="584" alt="image" src="https://github.com/user-attachments/assets/e91d5943-788a-40b5-96f5-08e4fc00843b" />
+- Bar chart untuk missing value dalam dataset
+- Chart untuk menampilkan Total Kasus Per Bulan
+<img width="1280" height="580" alt="image" src="https://github.com/user-attachments/assets/72de1656-e64d-4a23-8ba7-196130a4cb99" />
+
+- Trend fluktuasi kasus DBD dalam dataset
+<img width="1280" height="455" alt="image" src="https://github.com/user-attachments/assets/8484f772-35b1-4e5a-80a1-b71b1a0042be" />
+
+- Insight dataset
+- tampilan dataset dalam tabel
+<img width="1280" height="584" alt="image" src="https://github.com/user-attachments/assets/0bac726e-f0b9-4f4e-acaa-c532d9509622" />
+
 
 
 3. **Halaman Training dan Visualisasi Model**
 - Melakukan training data
 - Menampilkan evaluasi matriks (MAPE, MAE, RMSE, R2 Squared)
-  
-<img width="1280" height="570" alt="image" src="https://github.com/user-attachments/assets/d02e663c-eb0d-44f7-9e48-834426935bee" />
-
 - Menampilkan visualisasi perbandingan antara data hasil prediksi dengan data aktual dari dataset
-<img width="1280" height="581" alt="image" src="https://github.com/user-attachments/assets/85c36aea-297e-4df7-a2f0-a8eb9f8daba4" />
-
 - Menampilkan selisih antara data prediksi dan data aktual
- <img width="1280" height="573" alt="image" src="https://github.com/user-attachments/assets/4cd4da9c-8cd1-4bdf-a1ef-fca9a76b5a9a" />
+<img width="1280" height="575" alt="image" src="https://github.com/user-attachments/assets/13203ec5-ecd3-4a56-909a-67f257150f47" />
+
 
 4. **Halaman Prediksi**
 - Mengisi periode kasus yang ingin diprediksi (1 - 12 bulan)
 - Mengisi tahun dan bulan yang ingin di prediksi
 - Mengisi lag feature (jumlah kasus 6 bulan terakhir)
-  
-<img width="1280" height="433" alt="image" src="https://github.com/user-attachments/assets/b0350680-cf12-45aa-ab77-8b9f10502bb1" />
 
+<img width="1280" height="380" alt="image" src="https://github.com/user-attachments/assets/d65db3fb-8b54-4a46-9200-5e384ae61425" />
 - Contoh Hasil Prediksi
-  
-<img width="1280" height="586" alt="image" src="https://github.com/user-attachments/assets/0eec87ba-d5e2-4ef9-9263-3d9ebb9710e4" />
+<img width="1280" height="447" alt="image" src="https://github.com/user-attachments/assets/270e9fc5-7907-4488-973d-7ce14cb2756f" />
+
 
 5. **Halaman Cetak Laporan**
+<img width="1280" height="584" alt="image" src="https://github.com/user-attachments/assets/521cdf98-4502-4d11-9ff3-28bdc6ebb547" />
 
-<img width="1280" height="586" alt="image" src="https://github.com/user-attachments/assets/003a16cd-6f26-4fb5-af13-16687a7d0270" />
 
 # Dataset
 - **Sumber                 :** Dinas Kesehatan Kota Padang
