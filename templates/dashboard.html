@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
       labels: chartTitle,
       datasets: [
         {
-          label: 'Missing Values',
+          label: 'Jumlah Data Kosong',
           data: chartMissing,
           borderColor: '#455c36',
           backgroundColor: '#7eb439',
@@ -159,8 +159,16 @@ document.addEventListener("DOMContentLoaded", function () {
         datalabels: { font: { size: 11, weight: 'bold' } } 
       },
       scales: {
-        x: { title: { display: false, text: 'Fitur Dataset' } },
-        y: { title: { display: true, text: 'Jumlah Missing Value' }, beginAtZero: true } 
+        x: { title: { display: false, text: 'Fitur Dataset' },
+        ticks: {
+          maxRotation: 0,
+          minRotation: 0,
+          font: {
+            size: 11 
+              }
+          }
+        },
+        y: { title: { display: true, text: 'Jumlah Missing Value', align: 'center' }, beginAtZero: true } 
       }
     },
     plugins: [ChartDataLabels]
@@ -219,8 +227,8 @@ document.addEventListener("DOMContentLoaded", function () {
         {
           label: 'Trend Data',
           data: trendData,
-          borderColor: '#7eb439',
-          backgroundColor: 'rgba(126, 180, 57, 0.1)',
+          borderColor: '#c63e4e',
+          backgroundColor: '#c63e4e',
           tension: 0.2,
           fill: false,
           datalabels: {display: false}
@@ -241,12 +249,23 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         },
         scales: {
-          x: {
-            grid: { display: false }, 
-            ticks: {
-              font: { size: 8}
+  x: {
+    grid: { display: false }, 
+    ticks: {
+      maxRotation: 0,
+      minRotation: 0,
+      font: { size: 8 },
+      callback: function(value) {
+        const label = this.getLabelForValue(value);
+        
+        // Memisahkan teks
+        if (typeof label === 'string' && label.includes('-')) {
+          return label.split('-'); 
+        }
+        return label;
             }
-          },
+          }
+        },
           y: {
             beginAtZero: true,
             title: { display: true, text: 'Jumlah Kasus' }
