@@ -1,5 +1,9 @@
-# dengue-prediction-rf
-Peramalan jumlah kasus DBD bulanan menggunakan algoritma Random Forest di Python berdasarkan data tahun, bulan, Angka Bebas Jentik (ABJ), dan riwayat jumlah kasus.
+# 🦟 Dengue Case Forecasting Web Application using Random Forest Regression
+Aplikasi web berbasis data (*data-driven web application*) yang dirancang khusus untuk memprediksi dan meramalkan jumlah kasus bulanan Demam Berdarah Dengue (DBD). Proyek ini memanfaatkan pendekatan *Machine Learning Pipeline* dengan mengimplementasikan algoritma **Random Forest Regressor** untuk memodelkan pola non-linear pada data deret waktu (*time-series*).
+
+Sistem prediktif ini mengintegrasikan indikator lingkungan berupa **Angka Bebas Jentik (ABJ)** serta rekayasa fitur berbasis **Lag Features (riwayat tren kasus 6 bulan terakhir)** sebagai variabel prediktor utama. Dikembangkan menggunakan backend **Flask (Python)** dan arsitektur frontend yang responsif, aplikasi ini ditujukan untuk membantu instansi kesehatan dalam melakukan deteksi dini, perencanaan logistik medis, dan pengambilan keputusan preventif yang lebih akurat.
+
+---
 
 # Fitur
 - Login
@@ -12,11 +16,11 @@ Peramalan jumlah kasus DBD bulanan menggunakan algoritma Random Forest di Python
 - Logout
 
 # Tampilan Website
-1. **Halaman Login**
+## 1. **Halaman Login**
 
 <img width="1280" height="586" alt="image" src="https://github.com/user-attachments/assets/7bf87936-c89b-4fe2-b70f-c45f5c86a02d" />
 
-2. **Halaman Dashborad (Upload Data dan Tampilan Dataset)**
+## 2. **Halaman Dashborad (Upload Data dan Tampilan Dataset)**
 - Menampilkan jumlah data yanng tersedia
 - Kasus tertinggi
 - Kasus terendah
@@ -35,7 +39,7 @@ Peramalan jumlah kasus DBD bulanan menggunakan algoritma Random Forest di Python
 
 
 
-3. **Halaman Training dan Visualisasi Model**
+## 3. **Halaman Training dan Visualisasi Model**
 - Melakukan training data
 - Menampilkan evaluasi matriks (MAPE, MAE, RMSE, R2 Squared)
 - Menampilkan visualisasi perbandingan antara data hasil prediksi dengan data aktual dari dataset
@@ -43,7 +47,7 @@ Peramalan jumlah kasus DBD bulanan menggunakan algoritma Random Forest di Python
 <img width="1280" height="575" alt="image" src="https://github.com/user-attachments/assets/13203ec5-ecd3-4a56-909a-67f257150f47" />
 
 
-4. **Halaman Prediksi**
+## 4. **Halaman Prediksi**
 - Mengisi periode kasus yang ingin diprediksi (1 - 12 bulan)
 - Mengisi tahun dan bulan yang ingin di prediksi
 - Mengisi lag feature (jumlah kasus 6 bulan terakhir)
@@ -53,16 +57,16 @@ Peramalan jumlah kasus DBD bulanan menggunakan algoritma Random Forest di Python
 <img width="1280" height="447" alt="image" src="https://github.com/user-attachments/assets/270e9fc5-7907-4488-973d-7ce14cb2756f" />
 
 
-5. **Halaman Cetak Laporan**
+## 5. **Halaman Cetak Laporan**
 <img width="1280" height="584" alt="image" src="https://github.com/user-attachments/assets/521cdf98-4502-4d11-9ff3-28bdc6ebb547" />
 
 
-# Dataset
+## Dataset
 - **Sumber                 :** Dinas Kesehatan Kota Padang
 - **Periode                :** 8 tahun (2017 - 2024)
 - **Fitur yang digunakan   :** Tahun, Bulan, Angka Bebas Jentik (ABJ), Jumlah Kasus
 
-# Teknologi yang digunakan
+## Teknologi yang digunakan
 - **Framework :** Flask
 
 - **Algoritma :** Random Forest Regression
@@ -71,7 +75,7 @@ Peramalan jumlah kasus DBD bulanan menggunakan algoritma Random Forest di Python
   
 - **Frontend :** HTML, CSS
 
-# Metodologi yang Digunakan
+## Metodologi yang Digunakan
 Proyek ini menerapkan metodologi berbasis *Machine Learning Pipeline* untuk data deret waktu (*time-series*). Tahapan metodologi yang dilakukan meliputi:
 
 1. **Pengumpulan Data:** Menggunakan data sekunder dari Dinas Kesehatan Kota Padang periode 2017 - 2024 yang mencakup variabel waktu, indikator lingkungan (ABJ), dan historis kasus.
@@ -84,11 +88,11 @@ Proyek ini menerapkan metodologi berbasis *Machine Learning Pipeline* untuk data
 4. **Split Data:** Menggunakan metode *Hold Out* untuk membagi ddata menjadi *Training Data* untuk melatih model sebanyak 12 data dan *Testing Data* untuk menguji performa prediksi sebanyak 78 data.
 5. **Pembangunan Model (Modeling):**
    * Menggunakan algoritma **Random Forest Regressor** di Python untuk mempelajari pola non-linear pada data kasus DBD.
-   * Menerapkan metodologi gabungan antara **Grid Search CV** dan **TimeSeriesSplit** (dengan 3 *fold*) untuk proses *Hyperparameter Tuning*. Langkah ini memastikan model dievaluasi secara ketat berdasarkan urutan kronologis waktu tanpa risiko kebocoran data masa depan.
+   * Menerapkan metodologi gabungan antara **Grid Search CV** dan **TimeSeriesSplit** (dengan 3 *fold*) untuk proses *Hyperparameter Tuning*, langkah ini memastikan model dievaluasi secara ketat berdasarkan urutan kronologis waktu tanpa risiko kebocoran data masa depan.
    * Parameter model yang dioptimasi meliputi jumlah pohon (`n_estimators`), kedalaman maksimum (`max_depth`), jumlah fitur maksimal (`max_features`), jumlah sampel minimum untuk *split* (`min_samples_split`), dan jumlah sampel minimum pada *leaf* (`min_samples_leaf`).
 6. **Evaluasi Model:** Mengukur akurasi prediksi menggunakan metrik evaluasi standar regresi, yaitu RMSE, MAE, MAPE, dan $R^2$ Squared.
 
-# Hasil dan Evaluasi Model
+## Hasil dan Evaluasi Model
 - **RMSE       :** 6.53
 - **MAE        :** 4.71
 - **MAPE       :** 10.46%
@@ -123,7 +127,7 @@ dengue-prediction-rf/
 ├── requirements.txt         # Daftar library Python (pandas, scikit-learn, dll)
 └── README.md                # Dokumentasi proyek
 ```
-
+---
 # Author
 - **Author   :** RAHMI MARDIAH SAPUTRI
 - **Email    :** rahmimardiahsaputri@gmail.com
